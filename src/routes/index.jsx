@@ -4,6 +4,7 @@ import Login from "../pages/Login";
 import Registro from "../pages/Registro";
 import { Toaster } from "react-hot-toast";
 import { useState } from "react";
+import { AnimatePresence } from "framer-motion";
 
 const RoutesMain = () => {
   const [user, setUser] = useState({});
@@ -31,14 +32,16 @@ const RoutesMain = () => {
         position="top-right"
         reverseOrder={false}
       />
-      <Routes>
-        <Route
-          path="/login"
-          element={<Login setLoading={setLoading} setUser={setUser} />}
-        />
-        <Route path="/register" element={<Registro loading={loading} />} />
-        <Route path="/" element={<Home user={user} />} />
-      </Routes>
+      <AnimatePresence>
+        <Routes>
+          <Route
+            path="/login"
+            element={<Login setLoading={setLoading} setUser={setUser} />}
+          />
+          <Route path="/register" element={<Registro loading={loading} />} />
+          <Route path="/" element={<Home user={user} />} />
+        </Routes>
+      </AnimatePresence>
     </>
   );
 };
