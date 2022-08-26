@@ -58,12 +58,30 @@ export const Content = styled.div`
   justify-content: space-between;
   align-items: flex-start;
   width: 100%;
-  background-color: var(--color-background);
-  padding: 7vh 20vw 0 20vw;
+  padding: 5vh 20vw 0 20vw;
   gap: 5vh;
 
+  main {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    button {
+      font-size: 1.2rem;
+      background-color: var(--color-gray-3);
+      color: var(--color-white);
+      height: 30px;
+      width: 30px;
+
+      &:hover {
+        color: var(--color-primary);
+      }
+    }
+  }
+
   h2 {
-    font-size: 1.1rem;
+    font-size: 1rem;
     color: var(--color-gray-0);
     font-weight: 700;
   }

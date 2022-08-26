@@ -1,15 +1,14 @@
 import { Route, Routes } from "react-router-dom";
+import { Toaster } from "react-hot-toast";
+import { AnimatePresence } from "framer-motion";
+import { useContext } from "react";
+import { AuthContext } from "../contexts/AuthContext";
 import Home from "../pages/Home";
 import Login from "../pages/Login";
 import Registro from "../pages/Registro";
-import { Toaster } from "react-hot-toast";
-import { useState } from "react";
-import { AnimatePresence } from "framer-motion";
 
 const RoutesMain = () => {
-  const [user, setUser] = useState({});
-  const [loading, setLoading] = useState(false);
-
+  const { user } = useContext(AuthContext);
   return (
     <>
       <Toaster
@@ -34,11 +33,8 @@ const RoutesMain = () => {
       />
       <AnimatePresence>
         <Routes>
-          <Route
-            path="/login"
-            element={<Login setLoading={setLoading} setUser={setUser} />}
-          />
-          <Route path="/register" element={<Registro loading={loading} />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Registro />} />
           <Route path="/" element={<Home user={user} />} />
         </Routes>
       </AnimatePresence>

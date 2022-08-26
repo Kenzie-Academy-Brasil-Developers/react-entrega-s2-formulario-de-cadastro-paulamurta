@@ -1,32 +1,12 @@
+import schema from "../../validators/registerUser";
 import { Container } from "./styles";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useNavigate } from "react-router-dom";
-import schema from "../../validators/registerUser";
-import axios from "axios";
-import toast from "react-hot-toast";
+import { useContext } from "react";
+import { AuthContext } from "../../contexts/AuthContext";
 
 const FormRegistro = () => {
-  const navigate = useNavigate();
-
-  function navigateToLogin() {
-    navigate("/login", { replace: true });
-  }
-
-  function submit(data) {
-    axios
-      .post("https://kenziehub.herokuapp.com/users", data)
-      .then((res) => {
-        toast.success("Conta criada com sucesso!");
-        console.log(res.data);
-        navigateToLogin();
-      })
-
-      .catch((err) => {
-        toast.error("Ops! Algo deu errado!");
-        console.log(err);
-      });
-  }
+  const { signUp } = useContext(AuthContext);
 
   const {
     register,
@@ -40,7 +20,7 @@ const FormRegistro = () => {
         <h2>Crie sua conta</h2>
         <h1>Rápido e grátis, vamos nessa!</h1>
 
-        <form noValidate={true} onSubmit={handleSubmit(submit)}>
+        <form noValidate={true} onSubmit={handleSubmit(signUp)}>
           <fieldset>
             <label htmlFor="name">Nome</label>
             <input

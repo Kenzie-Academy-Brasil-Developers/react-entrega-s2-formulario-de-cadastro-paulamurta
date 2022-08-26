@@ -1,39 +1,13 @@
+import schemaLogin from "../../validators/loginUser";
 import { Container } from "./styles";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Link, useNavigate } from "react-router-dom";
-import schemaLogin from "../../validators/loginUser";
-import axios from "axios";
-import toast from "react-hot-toast";
+import { Link } from "react-router-dom";
+import { useContext } from "react";
+import { AuthContext } from "../../contexts/AuthContext";
 
-const FormLogin = ({ setUser, setLoading }) => {
-  const navigate = useNavigate();
-
-  function navigateToHome() {
-    navigate("/", { replace: true });
-  }
-
-  function submit(data) {
-    setLoading(true);
-    axios
-      .post("https://kenziehub.herokuapp.com/sessions", data)
-      .then((res) => {
-        setUser(res.data.user);
-        toast.success(`Bem vindo(a), ${res.data.user.name}!`);
-        console.log(res.data);
-        localStorage.clear();
-        localStorage.setItem("@TOKEN", res.data.token);
-        localStorage.setItem("@USERID", res.data.user.id);
-        navigateToHome();
-        setLoading(false);
-      })
-
-      .catch((err) => {
-        toast.error("Ops! Algo deu errado!");
-        console.log(err);
-        setLoading(false);
-      });
-  }
+const FormLogin = () => {
+  const { logIn } = useContext(AuthContext);
 
   const {
     register,
@@ -45,7 +19,7 @@ const FormLogin = ({ setUser, setLoading }) => {
     <Container>
       <h2>Login</h2>
 
-      <form noValidate={true} onSubmit={handleSubmit(submit)}>
+      <form noValidate={true} onSubmit={handleSubmit(logIn)}>
         <fieldset>
           <label htmlFor="email">E-mail</label>
           <input

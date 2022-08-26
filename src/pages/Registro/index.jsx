@@ -1,10 +1,10 @@
 import FormRegistro from "../../components/FormRegistro";
-import { Container } from "./styles";
 import LogoKenzieHub from "../../assets/Logo.svg";
+import { Container } from "./styles";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 
-const Registro = ({ loading }) => {
+const Registro = () => {
   const navigate = useNavigate();
 
   function navigateToLogin() {
@@ -21,9 +21,7 @@ const Registro = ({ loading }) => {
       <Container>
         <nav>
           <img src={LogoKenzieHub} alt="Logo" />
-          <button loading={loading} onClick={navigateToLogin}>
-            Voltar
-          </button>
+          <button onClick={navigateToLogin}>Voltar</button>
         </nav>
         <FormRegistro />
       </Container>

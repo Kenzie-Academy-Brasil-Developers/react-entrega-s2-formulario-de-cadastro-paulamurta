@@ -1,9 +1,9 @@
 import FormLogin from "../../components/FormLogin";
-import { Container } from "./styles";
 import LogoKenzieHub from "../../assets/Logo.svg";
+import { Container } from "./styles";
 import { motion } from "framer-motion";
 
-const Login = ({ setLoading, setUser }) => {
+const Login = () => {
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -15,7 +15,7 @@ const Login = ({ setLoading, setUser }) => {
         <nav>
           <img src={LogoKenzieHub} alt="Logo" />
         </nav>
-        <FormLogin setUser={setUser} setLoading={setLoading} />
+        <FormLogin />
       </Container>
     </motion.div>
   );
