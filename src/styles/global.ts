@@ -1,7 +1,8 @@
 import { createGlobalStyle } from "styled-components";
+import { string } from "yup";
 
-import InterWoff from "../fonts/inter-v12-latin-regular.woff";
-import InterWoff2 from "../fonts/inter-v12-latin-regular.woff2";
+import InterWoff from "../fonts/inter-v12-latin-regular.woff" as string;
+import InterWoff2 from "../fonts/inter-v12-latin-regular.woff2" as string;
 
 const GlobalStyle = createGlobalStyle`
 

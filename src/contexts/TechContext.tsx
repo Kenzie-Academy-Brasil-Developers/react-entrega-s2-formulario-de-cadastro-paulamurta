@@ -3,15 +3,32 @@ import { api } from "../api/api";
 import toast from "react-hot-toast";
 import { AuthContext } from "./AuthContext";
 
-export const TechContext = createContext({});
+interface IFormAddTechnology {
+  title: string;
+  status: string;
+}
 
-export const TechProvider = ({ children }) => {
+interface ITechContext {
+  addTechnology: (data: IFormAddTechnology) => void;
+  deleteTechnology: (techId: string) => void;
+  showModal: boolean;
+  setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+interface ITechProvider {
+  children: React.ReactNode;
+}
+
+export const TechContext = createContext<ITechContext>({} as ITechContext);
+
+export const TechProvider = ({ children }: ITechProvider) => {
   const token = localStorage.getItem("@TOKEN");
-  const [showModal, setShowModal] = useState(false);
+  const [showModal, setShowModal] = useState<boolean>(false);
+
   const { techs, setTechs } = useContext(AuthContext);
 
-  function deleteTechnology(techId) {
-    api.defaults.headers.authorization = `Bearer ${token}`;
+  function deleteTechnology(techId: string) {
+    api.defaults.headers.common["authorization"] = `Bearer ${token}`;
     api
       .delete(`/users/techs/${techId}`)
       .then((res) => {
@@ -25,8 +42,8 @@ export const TechProvider = ({ children }) => {
       });
   }
 
-  function addTechnology(data) {
-    api.defaults.headers.authorization = `Bearer ${token}`;
+  function addTechnology(data: IFormAddTechnology) {
+    api.defaults.headers.common["authorization"] = `Bearer ${token}`;
     api
       .post("/users/techs", data)
       .then((res) => {

@@ -1,15 +1,66 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import toast from "react-hot-toast";
 import { createContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { api } from "../api/api";
 
-export const AuthContext = createContext({});
+interface IFormLogIn {
+  email: string;
+  password: string;
+}
 
-export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
-  const [techs, setTechs] = useState([]);
-  const [loading, setLoading] = useState(false);
+interface IFormSignUp {
+  name: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+  bio: string;
+  contact: string;
+  course_module: string;
+}
+
+interface IUser {
+  id: string;
+  name: string;
+  email: string;
+  course_module: string;
+  bio: string;
+  contact: string;
+  techs: ITechs[];
+  works: string[] | null;
+  created_at: string;
+  updated_at: string;
+  avatar_url: string | null;
+}
+
+interface ITechs {
+  id?: string;
+  title: string;
+  status: string;
+  created_at?: string;
+  updated_at?: string;
+}
+
+interface IAuthContext {
+  user: IUser | null;
+  setUser: React.Dispatch<React.SetStateAction<IUser | null>>;
+  techs: ITechs[];
+  setTechs: React.Dispatch<React.SetStateAction<ITechs[]>>;
+  loading: boolean;
+  setLoading: React.Dispatch<React.SetStateAction<boolean>>;
+  logIn: (data: IFormLogIn) => void;
+  signUp: (data: IFormSignUp) => void;
+}
+
+interface IAuthProvider {
+  children: React.ReactNode;
+}
+
+export const AuthContext = createContext<IAuthContext>({} as IAuthContext);
+
+export const AuthProvider = ({ children }: IAuthProvider) => {
+  const [user, setUser] = useState<IUser | null>(null);
+  const [techs, setTechs] = useState<ITechs[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const navigate = useNavigate();
   const token = localStorage.getItem("@TOKEN");
@@ -18,9 +69,17 @@ export const AuthProvider = ({ children }) => {
     async function autoLogin() {
       if (token) {
         try {
-          api.defaults.headers.authorization = `Bearer ${token}`;
+          api.defaults.headers.common["authorization"] = `Bearer ${token}`;
           const { data } = await api.get("/profile");
-          console.log("busquei usuario", data);
+          // OU...
+          // const { data } = await api.get("/profile", {
+          //   headers: {
+          //     Authorization: token as string,
+          //   },
+          // });
+
+          // OU TBM.. const response = await.api.get("/profile")
+          // e entao eu setaria os estados abaixo com response.data.user ou response.data.techs
           setUser(data);
           setTechs(data.techs);
           navigate("/", { replace: true });
@@ -35,7 +94,7 @@ export const AuthProvider = ({ children }) => {
     autoLogin();
   }, []);
 
-  function signUp(data) {
+  function signUp(data: IFormSignUp) {
     api
       .post("/users", data)
       .then((res) => {
@@ -50,7 +109,7 @@ export const AuthProvider = ({ children }) => {
       });
   }
 
-  function logIn(data) {
+  function logIn(data: IFormLogIn) {
     setLoading(true);
     api
       .post("/sessions", data)
