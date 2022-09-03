@@ -3,12 +3,12 @@ import { createContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { api } from "../api/api";
 
-interface IFormLogIn {
+export interface IFormLogIn {
   email: string;
   password: string;
 }
 
-interface IFormSignUp {
+export interface IFormSignUp {
   name: string;
   email: string;
   password: string;
@@ -92,7 +92,7 @@ export const AuthProvider = ({ children }: IAuthProvider) => {
       }
     }
     autoLogin();
-  }, []);
+  }, [navigate, token]);
 
   function signUp(data: IFormSignUp) {
     api

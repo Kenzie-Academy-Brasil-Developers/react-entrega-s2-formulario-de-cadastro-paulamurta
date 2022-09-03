@@ -3,7 +3,7 @@ import { Container } from "./styles";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useContext } from "react";
-import { AuthContext } from "../../contexts/AuthContext";
+import { AuthContext, IFormSignUp } from "../../contexts/AuthContext";
 
 const FormRegistro = () => {
   const { signUp } = useContext(AuthContext);
@@ -12,7 +12,7 @@ const FormRegistro = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({ resolver: yupResolver(schema) });
+  } = useForm<IFormSignUp>({ resolver: yupResolver(schema) });
 
   return (
     <>

@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useContext } from "react";
 import { motion } from "framer-motion";
-import { TechContext } from "../../contexts/TechContext";
+import { TechContext, IFormAddTechnology } from "../../contexts/TechContext";
 
 const RegisterModal = () => {
   const { addTechnology, showModal, setShowModal } = useContext(TechContext);
@@ -13,7 +13,7 @@ const RegisterModal = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({ resolver: yupResolver(schemaTechList) });
+  } = useForm<IFormAddTechnology>({ resolver: yupResolver(schemaTechList) });
 
   return (
     <motion.div

@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
 export const Container = styled.div`
   display: flex;
@@ -24,15 +24,7 @@ export const Container = styled.div`
       color: var(--color-gray-0);
       padding: 10px 15px;
       border-radius: 4px;
-
-      ${(props) =>
-        props.loading === true
-          ? css`
-              background-color: var(--color-primary-disable);
-            `
-          : css`
-              background-color: var(--color-gray-3);
-            `}
+      background-color: var(--color-gray-3);
     }
 
     button:hover {

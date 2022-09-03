@@ -3,14 +3,14 @@ import { api } from "../api/api";
 import toast from "react-hot-toast";
 import { AuthContext } from "./AuthContext";
 
-interface IFormAddTechnology {
+export interface IFormAddTechnology {
   title: string;
   status: string;
 }
 
 interface ITechContext {
   addTechnology: (data: IFormAddTechnology) => void;
-  deleteTechnology: (techId: string) => void;
+  deleteTechnology: (techId: string | undefined) => void;
   showModal: boolean;
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
 }
@@ -27,7 +27,7 @@ export const TechProvider = ({ children }: ITechProvider) => {
 
   const { techs, setTechs } = useContext(AuthContext);
 
-  function deleteTechnology(techId: string) {
+  function deleteTechnology(techId: string | undefined) {
     api.defaults.headers.common["authorization"] = `Bearer ${token}`;
     api
       .delete(`/users/techs/${techId}`)

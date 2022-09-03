@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Link } from "react-router-dom";
 import { useContext } from "react";
-import { AuthContext } from "../../contexts/AuthContext";
+import { AuthContext, IFormLogIn } from "../../contexts/AuthContext";
 
 const FormLogin = () => {
   const { logIn } = useContext(AuthContext);
@@ -13,7 +13,7 @@ const FormLogin = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({ resolver: yupResolver(schemaLogin) });
+  } = useForm<IFormLogIn>({ resolver: yupResolver(schemaLogin) });
 
   return (
     <Container>
